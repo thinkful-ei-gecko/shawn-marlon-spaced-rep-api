@@ -1,0 +1,31 @@
+1.)  Create .env file
+  NODE_ENV=development
+  DB_URL="postgresql://admin@localhost/morse"
+
+2.) Create admin user:
+  psql  (if not already in postgres)
+  create user admin;
+
+3.) Create admin role:
+  psql  (if not already in postgres)
+  create role admin superuser login createdb createrole;
+
+4.) Create DB:
+  psql  (if not already in postgres)
+  createdb morse;
+
+5.) Run migration scripts:
+  npm run migration
+  (specific step or to undo:  npm run migration [x])
+
+6.) Seed DB:
+
+  6A.) Connect to DB:
+  psql  (if not already in postgres)
+  \c morse
+
+  6B.) execute seed script:
+  \i [full file path to script]
+  (Example:  \i C:/Users/Cube/desktop/thinkful/shawn-marlon-spaced-rep/spaced-repetition-api/seeds/seed.tables.sql)
+
+7.) Confirm with DBeaver or psql.
