@@ -1,7 +1,9 @@
 # Spaced repetition API!
 
-## Local dev setup
 
+## Live server:  https://sleepy-mountain-27553.herokuapp.com/
+
+## Local dev setup
 If using user `dunder-mifflin`:
 
 ```bash
