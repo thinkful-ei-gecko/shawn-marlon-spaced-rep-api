@@ -27,6 +27,21 @@ const LanguageService = {
         'incorrect_count',
       )
       .where({ language_id })
+      .orderBy('next', 'ascending')
+  },
+
+  getOnDeck(db, head) {
+    return db
+      .from('word')
+      .select('original', 'correct_count', 'incorrect_count')
+      .where('word.id', head)
+      .then(word => {
+        return {
+          nextWord: word[0].original,
+          wordCorrectCount: word[0].correct_count,
+          wordIncorrectCount: word[0].incorrect_count
+        };
+      });
   },
 }
 

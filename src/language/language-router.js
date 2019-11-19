@@ -1,6 +1,8 @@
-const express = require('express')
-const LanguageService = require('./language-service')
-const { requireAuth } = require('../middleware/jwt-auth')
+const express = require('express');
+const bodyParser = express.json();
+const LanguageService = require('./language-service');
+const { requireAuth } = require('../middleware/jwt-auth');
+
 
 const languageRouter = express.Router()
 
@@ -45,14 +47,24 @@ languageRouter
 
 languageRouter
   .get('/head', async (req, res, next) => {
-    // implement me
-    res.send('implement me!')
+    try {
+      const nextMorse= await LanguageService.getOnDeck(
+        req.app.get('db'),
+        req.language.head
+      )
+      res.status(200).json({
+        totalScore: req.language.total_score,
+        ...nextMorse
+      })
+      next();
+    } catch(error){
+      next(error)
+    }
   })
 
 languageRouter
-  .post('/guess', async (req, res, next) => {
-    // implement me
-    res.send('implement me!')
-  })
+  .post('/guess', bodyParser, async (req, res, next) => {
+ 
+  });
 
 module.exports = languageRouter

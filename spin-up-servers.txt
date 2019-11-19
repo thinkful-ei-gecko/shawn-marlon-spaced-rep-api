@@ -1,0 +1,45 @@
+1.) Create .env file
+  NODE_ENV=development
+  PORT=8000
+  TZ='UTC'
+  MIGRATION_DB_HOST=127.0.0.1
+  MIGRATION_DB_PORT=5432
+  MIGRATION_DB_NAME=morse
+  MIGRATION_DB_USER=admin
+  MIGRATION_DB_PASS=
+  DB_URL="postgresql://admin@localhost/morse"
+  TEST_DB_URL="postgresql://admin@localhost/morsetest"
+  JWT_SECRET="spaced-repetition-jwt-secret"
+
+2.) Create admin user and role (IF not already done):
+  psql
+  create user admin;
+  create role admin superuser login createdb createrole;
+
+4.) Create both databases:
+  \q
+  createdb -U admin morse
+  createdb -U admin morsetest
+
+5.) Run migration scripts:
+  npm run migrate
+  npm run test_migrate
+
+6.) Seed both DBs:
+  A.) Be in /seeds directory
+    /cd [path]/seeds
+
+  B.) Connect to main DB:
+    psql
+    \c morse
+
+  C.) Execute seed script:
+    \i seed.tables.sql
+
+  D.) Connect to test DB:
+    \c morsetest
+
+  E.) Execute seed script:
+   \i seed.tables.sql
+
+7.) Confirm with DBeaver or psql.

@@ -4,15 +4,16 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "test": "mocha --require test/setup.js",
+    "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "migrate": "postgrator --config postgrator-config.js",
-    "start": "node src/server.js",
+    "test_migrate": "postgrator --config postgrator-config-test.js",
+    "test": "mocha --require test/setup.js",
     "predeploy": "npm audit",
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "author": "Tom `tomatao` HT <tomht@thinkful.com>",
+  "author": "Shawn Collette & Marlon Agno",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
