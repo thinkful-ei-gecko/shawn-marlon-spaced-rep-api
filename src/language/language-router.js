@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = express.json();
 const LanguageService = require('./language-service');
+//const SLL = require('../LinkedList/LinkedList');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 
@@ -62,9 +63,39 @@ languageRouter
     }
   })
 
-languageRouter
-  .post('/guess', bodyParser, async (req, res, next) => {
- 
-  });
+//get lang words
+//populate a SLL
+//compare guess to ss.head.translation.value
+//if correct add 1 to mem val
+//if incorrect set mem val to 1
+//shift ssl.head down equal to the mem value
+
+// languageRouter
+//   .post('/guess', bodyParser, async (req, res, next) => {
+//     try {
+//       const guess = req.body.guess
+//       const userWordList = await LanguageService.getLanguageWords(
+//         req.app.get('db'),
+//         req.language.id,
+//       )
+//       let bool;
+//       let userSLL = new SLL();
+      
+//       userWordList.forEach(word => {
+//         userSLL.insertAfter(word)
+//       });
+
+//       let bool = userWordList.head.value
+
+//       res.status(200).json({
+//         userWordList: userWordList,
+//         guess: guess,
+//         languageID: req.language.id,
+//       })
+//       next();
+//     } catch(error){
+//       next(error)
+//     }
+//   });
 
 module.exports = languageRouter

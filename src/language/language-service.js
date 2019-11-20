@@ -43,6 +43,12 @@ const LanguageService = {
         };
       });
   },
+
+  // validateGuess(db, guess) {
+  //   return db
+  //   .from('')
+  // }
+
 }
 
 module.exports = LanguageService

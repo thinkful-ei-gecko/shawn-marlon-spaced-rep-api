@@ -1,7 +1,8 @@
 const app = require('../src/app')
 const helpers = require('./test-helpers')
 
-describe('Language Endpoints', function () {
+//describe.only
+describe.only('Language Endpoints', function () {
   let db
 
   const testUsers = helpers.makeUsersArray()
@@ -123,7 +124,8 @@ describe('Language Endpoints', function () {
       )
     })
 
-    it.skip(`responds with 200 and user's languages`, () => {
+    //it.skip
+    it(`responds with 200 and user's languages`, () => {
       return supertest(app)
         .get(`/api/language/head`)
         .set('Authorization', helpers.makeAuthHeader(testUser))
@@ -155,7 +157,8 @@ describe('Language Endpoints', function () {
       )
     })
 
-    it.skip(`responds with 400 required error when 'guess' is missing`, () => {
+    //it.skip
+    it(`responds with 400 required error when 'guess' is missing`, () => {
       const postBody = {
         randomField: 'test random field',
       }
@@ -174,6 +177,7 @@ describe('Language Endpoints', function () {
         guess: 'incorrect',
       }
 
+      //it.skip
       it.skip(`responds with incorrect and moves head`, () => {
         return supertest(app)
           .post(`/api/language/guess`)
@@ -190,6 +194,7 @@ describe('Language Endpoints', function () {
           })
       })
 
+      //it.skip
       it.skip(`moves the word 1 space and updates incorrect count`, async () => {
         await supertest(app)
           .post(`/api/language/guess`)
@@ -216,6 +221,7 @@ describe('Language Endpoints', function () {
         word => word.language_id === testLanguage.id
       )
 
+      //it.skip
       it.skip(`responds with correct and moves head`, () => {
         const correctPostBody = {
           guess: testLanguagesWords[0].translation,
@@ -235,6 +241,7 @@ describe('Language Endpoints', function () {
           })
       })
 
+      //it.skip
       it.skip(`moves the word 2 spaces, increases score and correct count`, async () => {
         let correctPostBody = {
           guess: testLanguagesWords[0].translation,
