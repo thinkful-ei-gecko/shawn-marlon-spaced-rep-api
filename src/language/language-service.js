@@ -1,3 +1,5 @@
+const LinkedList = require('../LinkedList/LinkedList');
+
 const LanguageService = {
   getUsersLanguage(db, user_id) {
     return db
@@ -29,6 +31,35 @@ const LanguageService = {
       .where({ language_id })
       .orderBy('next', 'ascending')
   },
+
+  populateLinkedList(language, words) {
+    const ll = new LinkedList();
+    ll.id = language.id;
+    ll.name = language.name;
+    ll.total_score = language.total_score;
+    let word = words.find(w => w.id === language.head)  //created by getLanguageWords
+    ll.insertFirst({
+      id: word.id,
+      original: word.original,
+      translation: word.translation,
+      memory_value: word.memory_value,
+      correct_count: word.correct_count,
+      incorrect_count: word.incorrect_count,
+    })
+    while (word.next) {
+      word = words.find(w => w.id === word.next)
+      ll.insertLast({
+        id: word.id,
+        original: word.original,
+        translation: word.translation,
+        memory_value: word.memory_value,
+        correct_count: word.correct_count,
+        incorrect_count: word.incorrect_count,
+      })
+    }
+    return ll
+  },
+
 
   getTotalScore(db, user_id) {
     return db
@@ -76,18 +107,18 @@ const LanguageService = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-persistLinkedList(db, SLL) {
+persistLinkedList(db, linkedLanguage) {
   return db.transaction(trx =>
     Promise.all([
       db('language')
         .transacting(trx)
-        .where('id', SLL.head.value.language_id)
+        .where('id', linkedLanguage.id)
         .update({
-          total_score: SLL.total_score,
-          head: SLL.head.value.id,
+          total_score: linkedLanguage.total_score,
+          head: linkedLanguage.head.value.id,
         }),
 
-      ...SLL.forEach(node =>
+      ...linkedLanguage.forEach(node =>
         db('word')
           .transacting(trx)
           .where('id', node.value.id)

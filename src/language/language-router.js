@@ -67,53 +67,50 @@ languageRouter
   .post('/guess', bodyParser, async (req, res, next) => {
     const { guess } = req.body
     if(!req.body){
-      return res.status(404).json({error: 'Error'});
+      return res.status(400).json({error: 'Error'});
     }
-    //console.log(guess)
+   
     try {
       const words = await LanguageService.getLanguageWords(
         req.app.get('db'),
         req.language.id
       )
-      //console.log(words)
-      let SLL = new LinkedList()
-      //console.log(SLL)
-      const oldScore = await LanguageService.getTotalScore(
-        req.app.get('db'),
-        req.user.id
+
+      let SLL = LanguageService.populateLinkedList(
+        req.language,
+        words
       )
 
-      //console.log(`oldScore.total_score: ${oldScore.total_score}`)
+      const node = SLL.head
+      const answer = node.value.translation
+      let isCorrect;
 
-      console.log(words)
-      SLL.arrToSLL(words, SLL)
-      console.log(SLL)
-      SLL.total_score = oldScore.total_score
+      if(guess === answer){
+        isCorrect = true;
+        SLL.head.value.memory_value = node.value.memory_value*2
+        SLL.head.value.correct_count = SLL.head.value.correct_count +1
+        SLL.total_score = SLL.total_score +1
+      } else{
+        isCorrect = false;
+        SLL.head.value.memory_value = 1
+        SLL.head.value.incorrect_count = SLL.head.value.incorrect_count +1
+      }
 
-      //console.log(`oldScore.total_score:  ${SLL.total_score}`)
-      //console.log(`SLL.total_score = oldScore.total_score:  ${SLL.total_score}`)
+      SLL.moveHeadBy(SLL.head.value.memory_value)
 
-      let correct = SLL.isCorrect(guess, SLL)
-
-      //console.log(correct)
-      console.log(SLL.head.value.translation)
-      SLL.UpdateScoreAndSLL(guess, SLL)
-      console.log(SLL.head.value.translation)
-      //console.log(`SLL.total_score ++/-- :  ${SLL.total_score}`)
-      
-      //console.log(SLL)
-
-      const update = await LanguageService.persistLinkedList(
+      await LanguageService.persistLinkedList(
         req.app.get('db'),
         SLL
       )
-
-      console.log(update)
-
+      
       return res.status(200).json({
-        correct: correct,
-        total_score: SLL.total_score,
-        SLL: SLL
+        nextWord: SLL.head.value.original,
+        wordCorrectCount: SLL.head.value.correct_count,
+        wordIncorrectCount: SLL.head.value.incorrect_count,
+        totalScore: SLL.total_score,
+        answer: answer,
+        isCorrect: isCorrect
+        
       })
     } catch(error){
       next(error)
