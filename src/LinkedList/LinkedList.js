@@ -7,8 +7,9 @@ class _Node {
 
 class LinkedList {
   constructor() {
-    this.head = null;
     this.total_score = 0;
+    this.head = null;
+    
   }
 
   insertFirst(item){
@@ -161,7 +162,7 @@ class LinkedList {
     return nodeCounter;
   }
 
-  validateGuessAndUpdateSLL(guess, SLL) {
+  UpdateScoreAndSLL(guess, SLL) {
     let length = this.size(SLL);
     if (SLL.head.value.translation.toUpperCase() === guess.toUpperCase()) {
       SLL.head.value.memory_value += 1;
@@ -183,17 +184,18 @@ class LinkedList {
         SLL.moveHeadBy(SLL.head.value.memory_value);
       }
     }
+    //console.log(SLL)
     return SLL;
   }
 
-  // updateTotalScore() {
+  // updateTotaltotal_score() {
   //   let node = this.head;
-  //   let score = 0;
+  //   let total_score = 0;
   //   while (node !== null) {
-  //     score += node.value.correct_count;
+  //     total_score += node.value.correct_count;
   //     node = node.next;
   //   }
-  //   return score;
+  //   return total_score;
   // }
 
   isCorrect(guess, list){

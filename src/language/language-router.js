@@ -53,8 +53,9 @@ languageRouter
         req.app.get('db'),
         req.language.head
       )
+      console.log(nextMorse)
       res.status(200).json({
-        totalScore: req.language.total_score,
+        total_score: req.language.total_score,
         ...nextMorse
       })
     } catch(error){
@@ -74,25 +75,46 @@ languageRouter
         req.app.get('db'),
         req.language.id
       )
+      //console.log(words)
       let SLL = new LinkedList()
       //console.log(SLL)
+      const oldScore = await LanguageService.getTotalScore(
+        req.app.get('db'),
+        req.user.id
+      )
+
+      //console.log(`oldScore.total_score: ${oldScore.total_score}`)
+
+      console.log(words)
       SLL.arrToSLL(words, SLL)
+      console.log(SLL)
+      SLL.total_score = oldScore.total_score
+
+      //console.log(`oldScore.total_score:  ${SLL.total_score}`)
+      //console.log(`SLL.total_score = oldScore.total_score:  ${SLL.total_score}`)
+
       let correct = SLL.isCorrect(guess, SLL)
-      console.log(correct)
-    
-      SLL.validateGuessAndUpdateSLL(guess, SLL)
-      LanguageService.persistLinkedList(
+
+      //console.log(correct)
+      console.log(SLL.head.value.translation)
+      SLL.UpdateScoreAndSLL(guess, SLL)
+      console.log(SLL.head.value.translation)
+      //console.log(`SLL.total_score ++/-- :  ${SLL.total_score}`)
+      
+      //console.log(SLL)
+
+      const update = await LanguageService.persistLinkedList(
         req.app.get('db'),
         SLL
       )
-      //console.log(correct)
+
+      console.log(update)
+
       return res.status(200).json({
         correct: correct,
-        score: SLL.total_score,
+        total_score: SLL.total_score,
         SLL: SLL
-        //SLL: JSON.stringify(...SLL)
       })
-      .then()
     } catch(error){
       next(error)
     }

@@ -30,13 +30,42 @@ const LanguageService = {
       .orderBy('next', 'ascending')
   },
 
+  getTotalScore(db, user_id) {
+    return db
+      .from('language')
+      .select(
+        'language.total_score',
+      )
+      .where('language.user_id', user_id)
+      .first()
+  },
+
+
+  // getLanguageWords(db, language_id) {
+  //   return db
+  //     .from('word')
+  //     .select(
+  //       'id',
+  //       'language_id',
+  //       'original',
+  //       'translation',
+  //       'next',
+  //       'memory_value',
+  //       'correct_count',
+  //       'incorrect_count',
+  //     )
+  //     .where({ language_id })
+  //     .orderBy('next', 'ascending')
+  // },
+
   getOnDeck(db, head) {
     return db
       .from('word')
-      .select('original', 'correct_count', 'incorrect_count')
+      .select('translation', 'original', 'correct_count', 'incorrect_count')
       .where('word.id', head)
       .then(word => {
         return {
+          translation: word[0].translation,
           nextWord: word[0].original,
           wordCorrectCount: word[0].correct_count,
           wordIncorrectCount: word[0].incorrect_count
@@ -72,6 +101,38 @@ persistLinkedList(db, SLL) {
     ])
   )
 }
+
+// persistLinkedList(db, SLL) {
+//   return db.transaction(trx =>
+//     Promise.all([
+//       db('language')
+//         .transacting(trx)
+//         .where('id', SLL.head.value.language_id)
+//         .update({
+//           head: SLL.head.value.id,
+//           // total_score: SLL.total
+//         })
+//         .increment(total_score, SLL.value.total_score),
+        
+//       // db('language')
+//       //   .transacting(trx)
+//       //   .where('id', SLL.head.value.language_id)
+//       //   .increment(total_score, SLL.value.total_score),
+
+//       ...SLL.forEach(node =>
+//         db('word')
+//           .transacting(trx)
+//           .where('id', node.value.id)
+//           .update({
+//             memory_value: node.value.memory_value,
+//             correct_count: node.value.correct_count,
+//             incorrect_count: node.value.incorrect_count,
+//             next: node.next ? node.next.value.id : null,
+//           })
+//       )
+//     ])
+//   )
+// }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
