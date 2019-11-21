@@ -44,11 +44,37 @@ const LanguageService = {
       });
   },
 
-  // validateGuess(db, guess) {
-  //   return db
-  //   .from('')
-  // }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+persistLinkedList(db, SLL) {
+  return db.transaction(trx =>
+    Promise.all([
+      db('language')
+        .transacting(trx)
+        .where('id', SLL.head.value.language_id)
+        .update({
+          total_score: SLL.total_score,
+          head: SLL.head.value.id,
+        }),
+
+      ...SLL.forEach(node =>
+        db('word')
+          .transacting(trx)
+          .where('id', node.value.id)
+          .update({
+            memory_value: node.value.memory_value,
+            correct_count: node.value.correct_count,
+            incorrect_count: node.value.incorrect_count,
+            next: node.next ? node.next.value.id : null,
+          })
+      )
+    ])
+  )
+}
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 module.exports = LanguageService
+

@@ -20,6 +20,13 @@ app.use('/api/auth', authRouter)
 app.use('/api/language', languageRouter)
 app.use('/api/user', userRouter)
 
-app.use(errorHandler)
+// app.use(errorHandler)
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: app.get('env') === 'development' ? err : {}
+  });
+});
 
 module.exports = app
