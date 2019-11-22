@@ -18,7 +18,7 @@ This is the backend API server for Thinkful's Spaced Repetition project.
 
 The app aims to simulate flash card drills more effectively by automating the [Spaced Repetition](https://en.wikipedia.org/wiki/Spaced_repetition)   learning technique.  The app tracks the users performance history for each word, revisiting words which have proven to be more challenging for the use with a higher frequency.  The app utilizes user authorization, automatic log out on inactivity, data persistence, and score keeping.  
 
-NOTE:  A data structure constraint was placed upon the team.  This constrained forbid the use of data structures other than Linked Lists for data mutation and management.
+NOTE:  A data structure constraint was placed upon the team.  This constrained forbid the use of data structures other than [Linked Lists](https://en.wikipedia.org/wiki/Linked_list) for data mutation and management.
 
 
  ## Endpoints:
