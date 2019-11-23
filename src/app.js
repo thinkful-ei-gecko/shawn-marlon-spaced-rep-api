@@ -15,7 +15,9 @@ app.use(
     skip: () => NODE_ENV === "test"
   })
 );
-app.use(cors());
+app.use(cors({
+    origin: CLIENT_ORIGIN
+  }));
 app.use(helmet());
 
 app.use("/api/auth", authRouter);
