@@ -134,7 +134,7 @@ npm install
 
 npm run migrate
 
-env MIGRATION_DB_NAME=morse-test npm run migrate
+env MIGRATION_DATABASE_NAME=morse-test npm run migrate
 
 ```
 
@@ -195,6 +195,3 @@ npm run migrate -- 0
 - Chai (dev)
 - Supertest (dev)
 - Postgrator-cli (dev)
-
-
-
