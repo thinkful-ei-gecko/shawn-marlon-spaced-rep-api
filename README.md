@@ -1,17 +1,16 @@
 
 # Spaced Repetition Project - Thinkful EI34
 
-#### Live app:
-
-#### Repo:  [https://github.com/thinkful-ei-gecko/shawn-marlon-spaced-rep-api](https://github.com/thinkful-ei-gecko/shawn-marlon-spaced-rep-api)
-
+## Links
+* Live Application: https://spaced-morse.now.sh/
+* API Endpoint: https://intense-taiga-93516.herokuapp.com/api/
+* Client repo: https://github.com/thinkful-ei-gecko/shawn-marlon-spaced-rep
+* Server repo: https://github.com/thinkful-ei-gecko/shawn-marlon-spaced-rep-api
 
 ### Team: 
 - Shawn Collette
 - Marlon Agno
 
-
-  
 ## Project Description:
 
 This is the backend API server for Thinkful's Spaced Repetition project.
@@ -32,8 +31,6 @@ NOTE:  A data structure constraint was placed upon the team.  This constrained f
 | POST /api/user  | When submitted with valid 'name', 'username', and 'password' fields in the request body, will return status 201 and the newly created 'user_id'.|
 
 
-
-  
 
 ## User stories:
 
