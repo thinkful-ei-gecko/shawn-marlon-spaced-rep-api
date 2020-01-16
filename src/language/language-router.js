@@ -47,7 +47,6 @@ languageRouter.get("/head", async (req, res, next) => {
       req.app.get("db"),
       req.language.head
     );
-    console.log(nextMorse);
     res.status(200).json({
       totalScore: req.language.total_score,
       ...nextMorse
@@ -100,7 +99,7 @@ languageRouter.post("/guess", bodyParser, async (req, res, next) => {
       nextWord: SLL.head.value.original,
       wordCorrectCount: SLL.head.value.correct_count,
       wordIncorrectCount: SLL.head.value.incorrect_count,
-      total_score: SLL.total_score,
+      totalScore: SLL.total_score,
       answer: answer,
       isCorrect: isCorrect
     });

@@ -189,7 +189,7 @@ describe("Language Endpoints", function() {
           .expect(200)
           .expect({
             nextWord: testLanguagesWords[1].original,
-            total_score: 0,
+            totalScore: 0,
             wordCorrectCount: 0,
             wordIncorrectCount: 0,
             answer: testLanguagesWords[0].translation,
@@ -209,7 +209,7 @@ describe("Language Endpoints", function() {
           .send(incorrectPostBody)
           .expect({
             nextWord: testLanguagesWords[0].original,
-            total_score: 0,
+            totalScore: 0,
             wordCorrectCount: 0,
             wordIncorrectCount: 1,
             answer: testLanguagesWords[1].translation,
@@ -234,7 +234,7 @@ describe("Language Endpoints", function() {
           .expect(200)
           .expect({
             nextWord: testLanguagesWords[1].original,
-            total_score: 1,
+            totalScore: 1,
             wordCorrectCount: 0,
             wordIncorrectCount: 0,
             answer: testLanguagesWords[0].translation,
@@ -260,7 +260,7 @@ describe("Language Endpoints", function() {
           .send(correctPostBody)
           .expect({
             nextWord: testLanguagesWords[2].original,
-            total_score: 2,
+            totalScore: 2,
             wordCorrectCount: 0,
             wordIncorrectCount: 0,
             answer: testLanguagesWords[1].translation,
@@ -276,7 +276,7 @@ describe("Language Endpoints", function() {
           .send(correctPostBody)
           .expect({
             nextWord: testLanguagesWords[0].original,
-            total_score: 3,
+            totalScore: 3,
             wordCorrectCount: 1,
             wordIncorrectCount: 0,
             answer: testLanguagesWords[2].translation,
