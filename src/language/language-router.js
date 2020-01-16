@@ -49,7 +49,7 @@ languageRouter.get("/head", async (req, res, next) => {
     );
     console.log(nextMorse);
     res.status(200).json({
-      total_score: req.language.total_score,
+      totalScore: req.language.total_score,
       ...nextMorse
     });
   } catch (error) {

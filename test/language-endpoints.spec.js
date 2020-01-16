@@ -1,7 +1,7 @@
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.only("Language Endpoints", function() {
+describe("Language Endpoints", function() {
   let db;
 
   const testUsers = helpers.makeUsersArray();
@@ -135,7 +135,7 @@ describe.only("Language Endpoints", function() {
         .set("Authorization", helpers.makeAuthHeader(testUser))
         .expect(200)
         .expect({
-          total_score: 0,
+          totalScore: 0,
           answer: headWord.translation,
           nextWord: headWord.original,
           wordCorrectCount: 0,

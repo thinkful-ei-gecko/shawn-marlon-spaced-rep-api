@@ -1,6 +1,7 @@
 const knex = require('knex')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 /**
  * create a knex instance connected to postgres

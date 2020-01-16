@@ -51,7 +51,7 @@ authRouter
     }
   })
 
-  .put(requireAuth, (req, res) => {
+  .put(requireAuth, (req, res, next) => {
     const sub = req.user.username;
     const payload = {
       user_id: req.user.id,
@@ -59,7 +59,8 @@ authRouter
     };
     res.send({
       authToken: AuthService.createJwt(sub, payload)
-    });
+    })
+    .catch(next)
   });
 
 module.exports = authRouter;
